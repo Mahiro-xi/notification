@@ -7,6 +7,11 @@ fn main() {
     let mut click_status = false;
     let date = chrono::Local::now();
     let date_str = date.format("%a").to_string();
+    Notification::new()
+        .summary(TITLE)
+        .body("起動しました")
+        .show()
+        .unwrap();
     if date_str != "Tue" {
         Notification::new()
             .summary(TITLE)
