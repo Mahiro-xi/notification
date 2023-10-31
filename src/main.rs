@@ -5,10 +5,21 @@ const IN_TIME: [&str; 4] = ["10:55", "13:10", "14:50", "16:30"];
 const OUT_TIME: [&str; 4] = ["12:25", "14:40", "16:20", "17:30"];
 fn main() {
     let mut click_status = false;
-    let body = "test";
-
-    click_status = notify_do(&body);
-    println!("{}, {}", click_status, get_date());
+    Notification::new().summary(TITLE).body("起動しました").show().unwrap();
+    loop {
+        std::thread::sleep(std::time::Duration::from_secs(1));
+        let date = chrono::Local::now();
+        let date_str = date.format("%H:%M").to_string();
+        if IN_TIME.contains(&&*date_str) {
+            let body = "入室時間です";
+            click_status = notify_do(&body,&"入室");
+            println!("{}, {}", click_status, get_date());
+        } else if OUT_TIME.contains(&&*date_str) {
+            let body = "退室時間です";
+            click_status = notify_do(&body,&"退室");
+            println!("{}, {}", click_status, get_date());
+        }
+    }
 
 }
 
@@ -19,12 +30,12 @@ fn get_date() -> String{
 }
 
 
-fn notify_do(body: &str) -> bool{
+fn notify_do(body: &str,inout: &str) -> bool{
     let mut status = false;
     Notification::new()
         .summary(TITLE)
         .body(body)
-        .action("click", "Ok")
+        .action("click", inout)
         .hint(Hint::Resident(true))
         .show()
         .unwrap()
