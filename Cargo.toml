@@ -1,0 +1,9 @@
+[package]
+name = "notification"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4.31"
+notify-rust = "4.9.0"
+rsntp = "3.0.2"
