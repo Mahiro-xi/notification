@@ -61,15 +61,16 @@ fn notify_do(body: &str,inout: &str) -> bool{
         .summary(TITLE)
         .body(body)
         .action("click", inout)
-        .hint(Hint::Resident(true))
+        // .hint(Hint::Resident(true))
         .timeout(Timeout::Never)
         .show()
-        .unwrap()
-        .wait_for_action(|action| match action {
-            "click"  => {
-                status = true;
-            },
-            &_ => todo!()
-        });
+        .unwrap();
+        // .wait_for_action(|action| match action {
+        //     "click"  => {
+        //         status = true;
+        //     },
+        //     &_ => todo!()
+        // });
+
     return status;
     }
